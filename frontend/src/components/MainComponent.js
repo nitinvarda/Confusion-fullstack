@@ -40,12 +40,12 @@ class Main extends Component {
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300} >
                         <Switch>
 
-                            <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
-                            <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
+                            <Route exact path="/menu" component={Menu} />
+                            <Route exact path="/contactus" component={Contact} />
                             <Route path="/dish/:dishId" exact component={DishdetailComponent} />
                             <Route path="/favorite" exact component={FavoriteComponent} />
                             <Route path="/reservations" exact component={ReservationComponent} />
-                            <Route path="/aboutus" component={() => <About leaders={this.props.leaders.leaders} leadersLoading={this.props.leaders.isLoading} leadersErrMess={this.props.leaders.errMess} />} />
+                            <Route path="/aboutus" component={About} />
                             <Route path="/" exact strict component={Home} />
                             <Redirect to="/" />
                         </Switch>
