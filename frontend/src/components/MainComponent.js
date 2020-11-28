@@ -39,13 +39,14 @@ class Main extends Component {
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300} >
                         <Switch>
-                            <Route path="/" component={Home} />
+
                             <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
                             <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
                             <Route path="/dish/:dishId" exact component={DishdetailComponent} />
                             <Route path="/favorite" exact component={FavoriteComponent} />
                             <Route path="/reservations" exact component={ReservationComponent} />
                             <Route path="/aboutus" component={() => <About leaders={this.props.leaders.leaders} leadersLoading={this.props.leaders.isLoading} leadersErrMess={this.props.leaders.errMess} />} />
+                            <Route path="/" exact strict component={Home} />
                             <Redirect to="/" />
                         </Switch>
                     </CSSTransition>
