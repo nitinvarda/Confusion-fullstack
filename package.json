@@ -6,6 +6,7 @@
     "start": "node ./bin/www",
     "server": "nodemon ./bin/www",
     "frontend": "npm start --prefix frontend",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
     "dev": "concurrently \" npm run server\" \" npm run frontend\""
   },
   "dependencies": {
