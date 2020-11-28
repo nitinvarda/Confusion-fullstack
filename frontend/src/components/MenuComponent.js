@@ -55,7 +55,7 @@ const Menu = ({ dishes, onClick, }) => {
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
-                        <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item active>Menu</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="col-12">

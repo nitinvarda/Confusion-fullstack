@@ -79,13 +79,13 @@ const HeaderComponent = (props) => {
         <>
             <Navbar collapseOnSelect expand="lg" bg="#512da8" variant="dark" collapseOnSelect>
                 <Container>
-                    <Navbar.Brand href="/home" className="mr-auto"><img src={'/images/logo.png'}
+                    <Navbar.Brand href="/" className="mr-auto"><img src={'/images/logo.png'}
                         height="30" width="40" alt="Ristorante Con Fusion" /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
 
-                            <NavLink className="nav-link" to="/home" >
+                            <NavLink className="nav-link" to="/" >
                                 <span className="fa fa-home fa-lg"></span> Home
                                 </NavLink>
 

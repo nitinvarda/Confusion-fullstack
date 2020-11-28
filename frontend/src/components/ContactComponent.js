@@ -19,7 +19,7 @@ class Contact extends Component {
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
-                        <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item active> Contact Us</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="col-12">
