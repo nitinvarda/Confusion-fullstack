@@ -60,10 +60,10 @@ router.get("/", (req, res) => {
     }
   })
 })
+// upload.single('profileImage'),
+router.post('/signup', upload.single("profileImage"), async (req, res) => {
 
-router.post('/signup', upload.single('profileImage'), async (req, res) => {
-
-  const { username, email, password } = req.body
+  const { email, password, username } = req.body
   try {
     const user = await User.findOne({ email: email })
 

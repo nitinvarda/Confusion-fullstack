@@ -6,9 +6,10 @@ import {
     Form,
     Jumbotron, Container,
     Row, Col,
+    Alert
 } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
-import { addReservation, loginUser, logoutUser } from '../redux/ActionCreators'
+import { addReservation, loginUser, logoutUser, registerUser } from '../redux/ActionCreators'
 import { connect } from 'react-redux'
 
 
@@ -16,12 +17,21 @@ const HeaderComponent = (props) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isReserveModalOpen, setIsReserveModalOpen] = useState(false)
+    const [isRegistrationOpen, setIsRegistrationOpen] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [remember, setRemember] = useState(false)
     const [guests, setGuests] = useState(0)
     const [smoking, setSmoking] = useState(false)
     const [date, setDate] = useState('')
+
+    const [registerEmail, setRegisterEmail] = useState('')
+    const [registerPassword, setRegisterPassword] = useState('')
+    const [registerConfirmPassword, setRegisterConfirmPassword] = useState('')
+    const [registerUsername, setRegisterUsername] = useState('')
+    const [registerImage, setRegisterImage] = useState('')
+
+    const [errors, setErrors] = useState('')
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('savedUser'))
@@ -43,6 +53,12 @@ const HeaderComponent = (props) => {
     }
     const toggleReserveModal = () => {
         setIsReserveModalOpen(!isReserveModalOpen)
+    }
+
+    const toggleRegistrationModal = () => {
+        setErrors('')
+        setIsModalOpen(false)
+        setIsRegistrationOpen(!isRegistrationOpen)
     }
 
 
@@ -72,6 +88,23 @@ const HeaderComponent = (props) => {
         props.login(email, password)
         toggleModal();
 
+
+    }
+    const handleRegistration = (e) => {
+        e.preventDefault()
+        if (registerPassword === registerConfirmPassword) {
+            props.register(registerEmail, registerUsername, registerImage, registerPassword)
+            setRegisterEmail('')
+            setRegisterImage('')
+            setRegisterPassword('')
+            setRegisterConfirmPassword('')
+            setRegisterUsername('')
+            toggleRegistrationModal()
+
+        }
+        else {
+            setErrors('Passwords doesn\'t Match')
+        }
 
     }
 
@@ -180,7 +213,58 @@ const HeaderComponent = (props) => {
 
 
                         </Form.Group>
-                        <Button type="submit" value="submit" color="primary" >Login</Button>
+                        <Modal.Footer>
+
+                            <Button type="submit" value="submit" color="primary" >Login</Button>
+                            <Button onClick={toggleRegistrationModal} >New? Register Here</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>
+
+            </Modal>
+
+            <Modal show={isRegistrationOpen} onHide={toggleRegistrationModal} >
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {errors ? (<Alert variant="danger" >{errors}</Alert>) : null}
+                    <Form onSubmit={handleRegistration}>
+                        <Form.Group>
+                            <Form.Label htmlFor="username">Username</Form.Label>
+                            <Form.Control type='text' placeholder="Username" value={registerUsername} onChange={(e) => setRegisterUsername(e.target.value)} />
+
+
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label htmlFor="email">Email</Form.Label>
+                            <Form.Control type="email" placeholder="Email" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} />
+
+
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label htmlFor="password">Password</Form.Label>
+                            <Form.Control type='password' placeholder="Enter Password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} />
+
+
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label htmlFor="password">Confirm Password</Form.Label>
+                            <Form.Control type='password' placeholder="Confirm Password" value={registerConfirmPassword} onChange={(e) => setRegisterConfirmPassword(e.target.value)} />
+
+
+                        </Form.Group>
+                        <Form.Group id="forCheckBox">
+
+                            <Form.File id="image" checked={registerImage} onChange={(e) => setRegisterImage(e.target.files[0])} />
+
+
+
+                        </Form.Group>
+
+                        <Button type="submit" value="submit" color="primary" >Register</Button>
+
                     </Form>
                 </Modal.Body>
 
@@ -300,6 +384,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     login: (email, password) => dispatch(loginUser(email, password)),
     addReservation: (guests, smoking, date) => dispatch(addReservation(guests, smoking, date)),
-    logout: () => dispatch(logoutUser())
+    logout: () => dispatch(logoutUser()),
+    register: (email, username, image, password) => dispatch(registerUser(email, username, image, password))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

@@ -65,6 +65,37 @@ export const dishWithId = (dishId) => async (dispatch, getState) => {
 }
 
 
+export const registerUser = (email, username, profileImage, password) => async (dispatch) => {
+    dispatch({ type: ActionTypes.LOGIN_USER_LOADING })
+
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    };
+
+
+    const form = new FormData();
+    form.append("profileImage", profileImage);
+    form.append("username", username);
+    form.append("email", email);
+    form.append("password", password);
+
+
+
+    try {
+        const response = await axios.post("/users/signup", form, config)
+        console.log(response)
+        dispatch({ type: ActionTypes.LOGIN_USER_SUCCESS, payload: response.data })
+        dispatch(getFavorites())
+        dispatch(getReservations())
+    }
+    catch (err) {
+        console.log(err)
+        dispatch({ type: ActionTypes.LOGIN_USER_FAILED, payload: err })
+    }
+}
+
 
 export const loginUser = (email, password) => async (dispatch) => {
     dispatch({ type: ActionTypes.LOGIN_USER_LOADING })
